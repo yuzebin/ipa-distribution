@@ -158,6 +158,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             f = StringIO()
             f.write('restart success!!')
             return
+
         if self.path.endswith('.plist'):
             f = StringIO()
             ipa_name = self.path.split('/')[-1].split('.')[0]
@@ -171,6 +172,14 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             print 'plist content ' , plist_content
             f.seek(0)
             return f 
+
+        if self.path.endswith('.py'):
+            self.send_response(200)
+            self.send_header("Content-type", ctype)
+            self.end_headers()
+            f = StringIO()
+            f.write('不乖哦!!')
+            return
 
         if os.path.isdir(path):
             if not self.path.endswith('/'):
